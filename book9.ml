@@ -31,17 +31,28 @@ fun max_pairs2 l = map (fn (l,r) => if l>r then l else r) l
 fun my_implode l = foldr (fn (a, b) => str(a)^b) "" l
 fun my_implode2 l = foldl (fn (a, b) => b^str(a)) "" l
 
-fun my_append l = foldr (fn (a, b) => a @ b) [] l
+fun all_append l = foldr (fn (a, b) => a @ b) [] l
 
 fun max l = foldr (fn (a, b) => if a>b then a else b) (hd l) l
 
 fun min l = foldr (fn (a, b) => if a<b then a else b) (hd l) l
 
-fun member (x:int,l) = foldr (fn (a, b) => if x=a then true else b orelse false) false l
+fun member (x,l) = foldr (fn (a, b) => if x=a then true else b orelse false) false l
 
+fun append l r = foldr (fn (a, b) => a::b) r l
 
+fun less (x,l) = foldr (fn (a, b) => if a<x then a::b else b) [] l
+fun less2 (x,l) = foldl (fn (a, b) => if a<x then a::b else b) [] l (* = List.inv(less) *)
 
+fun evens l = foldr (fn (a, b) => if a mod 2 = 0 then a::b else b) [] l
 
+fun convert l = foldr (fn ((x, y), (w, z)) => (x::w, y::z)) ([],[]) l
+
+fun mymap f x = foldr (fn (a, b) => (f a)::b) [] x
+fun mymap2 f x = foldl (fn (a, b) => b @ [f a]) [] x (* less efficient obviously *)
+
+(* observe that P(x) = a0 + a1*x + a2*x^2 + ... + an*x^n = a0 + x(a1 + x(a2 + x(...))) *)
+fun evaluate l x = foldr (fn (a, b) => a + x*b) 0.0 l
 
 
 
