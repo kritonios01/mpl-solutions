@@ -58,3 +58,17 @@ fun complete_tree Empty = true
 |	complete_tree (Node(l,_,r)) = 
 		if (l<>Empty andalso r<>Empty) then (complete_tree l) andalso (complete_tree r) 
 		else if (l=Empty andalso r=Empty) then true else false
+
+(* THIS IS WRONG!!!
+fun makeBST nil _ = Empty
+|	makeBST [a] _ = Node(Empty,a,Empty)
+|	makeBST (a::b::t) f = 
+		if f(a,b) then Node(makeBST (a::t) f,b,Empty)
+		else Node(Empty, a, makeBST (b::t) f)
+*)
+
+fun searchBST Empty _ = false
+|	searchBST (Node(l,n,r)) x = 
+		if n=x then true 
+		else if x>n then searchBST r x
+		else searchBST l x
